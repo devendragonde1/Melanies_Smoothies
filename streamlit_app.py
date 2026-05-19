@@ -22,12 +22,20 @@ if ingredients_list:
     ingredients_string=''
 
     for fruit_chosen in ingredients_list:
-        ingredients_string+=fruit_chosen+' '
-        search_on=pd_df.loc[pd_df['FRUIT_NAME'] == fruit_chosen, 'SEARCH_ON'].iloc[0]
-        # st.write('The search value for ', fruit_chosen,' is ', search_on, '.')
-        st.subheader(fruit_chosen +'Nutritional Information')
+        ingredients_string += fruit_chosen + ' '
+        search_on = pd_df.loc[pd_df['FRUIT_NAME'] == fruit_chosen, 'SEARCH_ON'].iloc[0]
+    
+        st.subheader(fruit_chosen + ' Nutritional Information')
+    
         smoothiefroot_response = requests.get(f"https://my.smoothiefroot.com/api/fruit/{search_on}")
-        sf_df=st.dataframe(data=smoothiefroot_response. json(),use_container_width=True)
+    
+        # ✅ Debug line — remove once working
+        st.write("Calling API with:", search_on)
+    
+        if smoothiefroot_response.status_code == 200:
+            sf_df = st.dataframe(data=smoothiefroot_response.json(), use_container_width=True)
+        else:
+            st.error(f"Could not find nutrition data for {fruit_chosen}. API returned: {smoothiefroot_response.text}")
     # st.write(ingredients_string)
     my_insert_stmt = """ insert into smoothies.public.orders(ingredients, name_on_order)
                     values ('""" + ingredients_string + """','"""+name_on_smoothie+"""')"""
