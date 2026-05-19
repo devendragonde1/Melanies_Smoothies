@@ -15,10 +15,10 @@ my_dataframe = session.table("smoothies.public.fruit_options").select((col('Frui
 ingredients_list=st.multiselect(
 'Choose upto 5 ingredients:', my_dataframe, max_selections=5
 )
-import requests  
-smoothiefroot_response = requests.get("[https://my.smoothiefroot.com/api/fruit/watermelon](https://my.smoothiefroot.com/api/fruit/watermelon)")  
-st.text(smoothiefroot_response)
-
+# New section to display smoothiefroot nutrition information
+import requests
+smoothiefroot_response = requests.get("https://my.smoothiefroot.com/api/fruit/watermelon")
+st.text(smoothiefroot_response. json())
 if ingredients_list:
     ingredients_string=''
 
