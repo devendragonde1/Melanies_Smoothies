@@ -15,6 +15,9 @@ my_dataframe = session.table("smoothies.public.fruit_options").select((col('Frui
 ingredients_list=st.multiselect(
 'Choose upto 5 ingredients:', my_dataframe, max_selections=5
 )
+import requests  
+smoothiefroot_response = requests.get("[https://my.smoothiefroot.com/api/fruit/watermelon](https://my.smoothiefroot.com/api/fruit/watermelon)")  
+st.text(smoothiefroot_response)
 
 if ingredients_list:
     ingredients_string=''
@@ -32,6 +35,4 @@ if ingredients_list:
         st.success(f'Your Smoothie is ordered! {name_on_smoothie}', icon="✅")
     
     
-import requests  
-smoothiefroot_response = requests.get("[https://my.smoothiefroot.com/api/fruit/watermelon](https://my.smoothiefroot.com/api/fruit/watermelon)")  
-st.text(smoothiefroot_response)
+
